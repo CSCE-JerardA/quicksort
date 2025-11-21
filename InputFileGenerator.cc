@@ -5,7 +5,7 @@
 #include <string> // For ASCII
 #include <fstream> // Handles files
 #include <sstream> // Reads/writes string for memory
-#include <iomanip>
+
 
 using namespace std;
 
