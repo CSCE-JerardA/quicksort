@@ -4,6 +4,8 @@
 #include <iostream>
 #include <algorithm>
 
+using namespace std;
+
 // Function prototypes
 void median_of_three(std::vector<float>$arr, int left, int right)
 int partition(std::vector<float>$arr, int left, int right)
@@ -76,4 +78,75 @@ void quicksort(std::vector<float>$arr, int left, int right) {
     quicksort(arr, left, pivIndex - 1);
 
     quicksort(arr, pivIndex + 1, right);
+}
+
+
+int main(int argc, char* argv[]) {
+
+    // Command line argument validation
+    if (argc != 4) {
+
+        cerr << "Usage: " << argv[0] << " <input_file.txt> <sorted_output.txt> <time_output.txt>" << endl;
+
+        return 1;
+    }
+
+    string input_filename = argv[1];
+    string sorted_output_filename = argv[2];
+    string time_output_filename = argv[3];
+
+
+    std::vector<float> data;
+
+    ifstream infile(input_filename);
+
+    if (!infile.is_open()) {
+        
+        cerr << "Error: Couldn't open this input file: " << input_filename << endl;
+
+        return 1;
+    }
+
+    float val;
+
+    // Attempts to read the next line from the input file
+    while (infile >> val) {
+        // This statement works as an append function for C++
+        data.push_back(val)
+    }
+
+    infile.close();
+
+    if (data.empty()) {
+        cerr << "Error: The input file is empty!" << endl;
+        return 1;
+    }
+
+    // Used to record the time for when the quick sort happens
+    // I had to learn the time information and statements from YouTube
+    auto startTime = std::high_resolution_clock::now();
+
+    // Calls quicksort for the vector
+    quicksort(data, 0, data.size() - 1);
+
+    // Used to end the time or recording
+    auto endTime = std::high_resolution_clock::now();
+
+    // Counts the duration in time in microseconds by subtracting the end and beginning
+    auto durationInMirco = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+
+    // Used to hold a large number
+    long long time_in_micro = durationInMicro.count();
+
+    oftsream sorted_outfile(sorted_output_filename);
+    if (!sorted_outfile.is_open) {
+        cerr << "Error: Couldn't open the output file" << endl;
+
+        return 1;
+    }
+
+    
+    
+
+    
 }
