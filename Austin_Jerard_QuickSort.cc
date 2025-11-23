@@ -91,11 +91,12 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
+    // Creates the filename variables as arguements
     string input_filename = argv[1];
     string sorted_output_filename = argv[2];
     string time_output_filename = argv[3];
 
-
+    // Creates the data within the files
     std::vector<float> data;
 
     ifstream infile(input_filename);
@@ -106,7 +107,7 @@ int main(int argc, char* argv[]) {
 
         return 1;
     }
-
+    // Creates the value as a float type
     float val;
 
     // Attempts to read the next line from the input file
@@ -114,7 +115,7 @@ int main(int argc, char* argv[]) {
         // This statement works as an append function for C++
         data.push_back(val)
     }
-
+    // Closes the file
     infile.close();
 
     if (data.empty()) {
@@ -145,8 +146,28 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    
-    
+    // Writes these numbers separated by space
+    for (size_t i = 0; i < data.size(); ++i) {
+        sorted_outfile << data[i];
+        if (i < data.size() - 1) {
+            sorted_outfile << " ";
+        }
+    }
+    // Closes the file
+    sorted_outfile.close();
+
+    ofstream time_outfile(time_output_file);
+    if (!time_outfile.is_open()) {
+        cerr << "Error: Couldn't open output time file" << endl;
+
+        return 1;
+    }
+
+    // Reads the time in microseconds for the file
+    time_outfile << time_in_micro << endl;
+    // Closes the file
+    time_outfile.close();
+
 
     
 }
