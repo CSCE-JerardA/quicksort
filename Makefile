@@ -11,3 +11,8 @@ all: $(NAME_PREFIX)_QuickSort GenFile
 
 $(NAME_PREFIX)_QuickSort: Austin_Jerard_QuickSort.cc
 		$(CC) $(CFLAGS) Austin_Jerard_QuickSort.cc -o $(NAME_PREFIX)_QuickSort
+
+GenFile: InputFileGenerator.cc
+		$(CC) $(CFLAGS) InputFileGenerator.cc -o GenFile
+
+test: 
