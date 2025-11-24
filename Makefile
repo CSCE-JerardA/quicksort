@@ -15,4 +15,11 @@ $(NAME_PREFIX)_QuickSort: Austin_Jerard_QuickSort.cc
 GenFile: InputFileGenerator.cc
 		$(CC) $(CFLAGS) InputFileGenerator.cc -o GenFile
 
-test: 
+test: $(NAME_PREFIX)_QuickSort GenFile
+
+		@echo "--- Creating all 75 Input Files ---"
+		./GenFile
+
+		@echo "--- Running QuickSort Tests ---"
+
+		@for size in $(SIZES); do \ 
