@@ -23,3 +23,10 @@ test: $(NAME_PREFIX)_QuickSort GenFile
 		@echo "--- Running QuickSort Tests ---"
 
 		@for size in $(SIZES); do \ 
+
+				for i in $(FILES); do \
+						input_file="input_$$size_$$i.txt"; \
+						sorted_file="sorted_$$size_$$i.txt"; \
+						time_file="time_$$size_$$i.txt"; \
+
+						./$(NAME_PREFIX)_QuickSort "$$input_file" "$$sorted_file" "$$time_file"; \
