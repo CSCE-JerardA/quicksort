@@ -30,3 +30,14 @@ test: $(NAME_PREFIX)_QuickSort GenFile
 						time_file="time_$$size_$$i.txt"; \
 
 						./$(NAME_PREFIX)_QuickSort "$$input_file" "$$sorted_file" "$$time_file"; \
+
+				done; \
+
+		done; \
+
+		@echo "--- All 75 tests are complete! Time file saved! ---"
+
+
+
+clean:
+		rm -f $(NAME_PREFIX)_QuickSort GenFile *.txt
