@@ -2,18 +2,21 @@
 
 #include <vector>
 #include <iostream>
+#include <fstream>
+#include <chrono>
+#include <string>
 #include <algorithm>
 
 using namespace std;
 
 // Function prototypes
-void median_of_three(std::vector<float>$arr, int left, int right)
-int partition(std::vector<float>$arr, int left, int right)
-void quicksort(std::vector<float>$arr, int left, int right)
+void median_of_three(std::vector<float>&arr, int left, int right)
+int partition(std::vector<float>&arr, int left, int right)
+void quicksort(std::vector<float>&arr, int left, int right)
 
 
 // Creates median of three implementation
-void median_of_three(std::vector<float>$arr, int left, int right) {
+void median_of_three(std::vector<float>&arr, int left, int right) {
 
     if (right - left < 2) {
         return;
@@ -39,12 +42,13 @@ void median_of_three(std::vector<float>$arr, int left, int right) {
 
 
 // Chooses the left most element as the pivot and swaps the j
-int partition(std::vector<float>$arr, int left, int right) {
+int partition(std::vector<float>&arr, int left, int right) {
 
     // Pivot is already positioned
     float piv = arr[left];
 
     int i = left;
+    int j = right;
 
     
     for (int j = left + 1; j <= right; j++) {
@@ -64,12 +68,13 @@ int partition(std::vector<float>$arr, int left, int right) {
 }
 
 // Runs the median_of_three and partition, while also using recursion
-void quicksort(std::vector<float>$arr, int left, int right) {
+void quicksort(std::vector<float> &arr, int left, int right) {
 
     if (left >= right) {
         return;
     }
 
+    else (left < right) {
     median_of_three(arr, left, right);
 
     // Establishes the pivot index
@@ -78,6 +83,8 @@ void quicksort(std::vector<float>$arr, int left, int right) {
     quicksort(arr, left, pivIndex - 1);
 
     quicksort(arr, pivIndex + 1, right);
+
+   }
 }
 
 
@@ -99,7 +106,7 @@ int main(int argc, char* argv[]) {
     // Creates the data within the files
     std::vector<float> data;
 
-    ifstream infile(input_filename);
+   std:ifstream infile(input_filename);
 
     if (!infile.is_open()) {
         
@@ -113,7 +120,7 @@ int main(int argc, char* argv[]) {
     // Attempts to read the next line from the input file
     while (infile >> val) {
         // This statement works as an append function for C++
-        data.push_back(val)
+        data.push_back(val);
     }
     // Closes the file
     infile.close();

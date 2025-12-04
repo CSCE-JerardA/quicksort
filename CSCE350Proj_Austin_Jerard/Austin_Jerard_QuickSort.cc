@@ -1,0 +1,197 @@
+// Copyright 2025 Jerard A
+
+#include <vector>
+#include <iostream>
+#include <fstream>
+#include <chrono>
+#include <string>
+#include <algorithm>
+
+using namespace std;
+
+// Function prototypes
+void median_of_three(std::vector<float>& arr, int left, int right);
+int partition(std::vector<float>& arr, int left, int right);
+void quicksort(std::vector<float>& arr, int left, int right);
+
+
+// Creates median of three implementation
+void median_of_three(std::vector<float>& arr, int left, int right) {
+
+    if (right - left < 2) {
+        return;
+    }
+    // The formula for the median of three method while establishing mid 
+    int mid = left + (right - left) / 2;
+
+    // If the left is greater than the right, swap positions of left and right
+    if (arr[left] > arr[right]) {
+        std::swap(arr[left], arr[right]);
+    }
+    // If the mid greater than the right, swap the position of mid and right
+    if (arr[mid] > arr[right]) {
+        std::swap(arr[mid], arr[right]);
+    }
+    // If the left is greater than mid, swap the position of left and mid
+    if (arr[left] > arr[mid]) {
+        std::swap(arr[left], arr[mid]);
+    }
+
+    std::swap(arr[left], arr[mid]);
+}
+
+
+// Chooses the left most element as the pivot and swaps the j
+int partition(std::vector<float>& arr, int left, int right) {
+
+    // Pivot is already positioned
+    float piv = arr[left];
+
+    int i = left;
+     
+    for (int j = left + 1; j <= right; j++) {
+
+        // If j is less than or equal to the pivot then swap the positions of the pivot and j
+        if (arr[j] <= piv) {
+
+            i++;
+
+            std::swap(arr[i], arr[j]);
+        }
+    }
+    // Swaps the pivot(i) and j 
+    std::swap(arr[left], arr [i]);
+
+    return i;
+}
+
+// Runs the median_of_three and partition, while also using recursion
+void quicksort(std::vector<float>& arr, int left, int right) {
+
+    if (left < right) {
+    median_of_three(arr, left, right);
+
+    // Establishes the pivot index
+    int pivIndex = partition(arr, left, right);
+
+    quicksort(arr, left, pivIndex - 1);
+
+    quicksort(arr, pivIndex + 1, right);
+
+   }
+}
+
+
+int main(int argc, char* argv[]) {
+
+    // Command line argument validation
+    if (argc != 4) {
+
+        cerr << "Usage: " << argv[0] << " <input_file.txt> <sorted_output.txt> <time_output.txt>" << endl;
+
+        return 1;
+    }
+
+    // Creates the filename variables as arguements
+    string input_filename = argv[1];
+    string sorted_output_filename = argv[2];
+    string time_output_filename = argv[3];
+    
+    // For my time execution file
+    const string log_filename = "Austin_Jerard_executionTime.txt";
+    
+    // Error message when opening the input file
+    cerr << "Attempting to open file: " << input_filename << endl;
+
+    // Creates the data within the files
+    std::vector<float> data;
+
+    std::ifstream infile(input_filename);
+
+    if (!infile.is_open()) {
+        
+        cerr << "Error: Couldn't open this input file: " << input_filename << endl;
+
+        return 1;
+    }
+    // Creates the value as a float type
+    float val;
+
+    // Attempts to read the next line from the input file
+    while (infile >> val) {
+        // This statement works as an append function for C++
+        data.push_back(val);
+    }
+    // Closes the file
+    infile.close();
+
+    if (data.empty()) {
+        cerr << "Error: The input file is empty!" << endl;
+        return 1;
+    }
+
+    // Used to record the time for when the quick sort happens
+    // I had to learn the time information and statements from YouTube
+    auto startTime = std::chrono::high_resolution_clock::now();
+
+    // Calls quicksort for the vector
+    quicksort(data, 0, data.size() - 1);
+
+    // Used to end the time or recording
+    auto endTime = std::chrono::high_resolution_clock::now();
+
+    // Counts the duration in time in microseconds by subtracting the end and beginning
+    auto durationInMicro = std::chrono::duration_cast<std::chrono::microseconds>(endTime - startTime);
+
+    // Used to hold a large number
+    long long time_in_micro = durationInMicro.count();
+    
+    int array_size = data.size();
+
+    std::ofstream sorted_outfile(sorted_output_filename);
+
+    if (!sorted_outfile.is_open()) {
+        cerr << "Error: Couldn't open the output file" << endl;
+
+        return 1;
+    }
+
+    // Writes these numbers separated by space
+    for (size_t i = 0; i < data.size(); ++i) {
+        sorted_outfile << data[i];
+        if (i < data.size() - 1) {
+            sorted_outfile << " ";
+        }
+    }
+    // Closes the file
+    sorted_outfile.close();
+
+    std::ofstream time_outfile(time_output_filename);
+    if (!time_outfile.is_open()) {
+        cerr << "Error: Couldn't open output time file" << endl;
+
+        return 0;
+    }
+
+    // Reads the time in microseconds for the file
+    time_outfile << time_in_micro << endl;
+    // Closes the file
+    time_outfile.close();
+    
+    // 
+    std::ofstream log_file(log_filename, std::ios::app);
+    
+    if (!log_file.is_open()) {
+        // If this fails, it reports an error while letting the sort finish 
+        cerr << "Error: Failed opening execution log file: " << log_filename << endl;
+        return 1;
+    }
+
+    
+    log_file << array_size << " " << time_in_micro << endl;
+    
+    log_file.close();
+
+
+    
+}

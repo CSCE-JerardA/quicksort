@@ -5,7 +5,7 @@
 #include <string> // For ASCII
 #include <fstream> // Handles files
 #include <sstream> // Reads/writes string for memory
-
+#include <iomanip> // Controls the format of input/output streams
 
 using namespace std;
 
@@ -35,9 +35,9 @@ int main(){
             ostringstream filename_ss;
             filename_ss << "input_" << n << "_" << setfill('0') << setw(2) << i << ".txt" ;
 
-            string filename = filename_ss.str();
+            std::string filename = filename_ss.str();
 
-            ofstream outfile(filename);
+            std::ofstream outfile(filename);
 
             if (!outfile.is_open()) {
 
@@ -53,11 +53,11 @@ int main(){
                 outfile << num;
 
                 if (j < n - 1) {
-                    outfile << " "
+                    outfile << " ";
                 }
             }
 
-            outfile.close()
+            outfile.close();
         }
 
         cout << "Successfully generated 25 files for the size of " << n << "!" << endl;
