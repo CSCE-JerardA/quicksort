@@ -1,12 +1,12 @@
-QuickSort Performance Analysis Project (Median-of-Three)
+#QuickSort Performance Analysis Project (Median-of-Three)
 
-1. Project Overview
+##1. Project Overview
 
 This project implements the QuickSort algorithm with a Median-of-Three partitioning strategy and includes a complete automated testing framework to measure its average-case performance.
 
-The project automatically generates 75 input files across three sizes (10, 100, 1000), sorts them, records the execution time for each run, and calculates the average time for each size group.
+* The project automatically generates 75 input files across three sizes (10, 100, 1000), sorts them, records the execution time for each run, and calculates the average time for each size group.
 
-2. Project Files
+##2. Project Files
 
 File Name
 
